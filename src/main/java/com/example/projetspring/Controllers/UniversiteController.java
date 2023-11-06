@@ -34,6 +34,14 @@ public class UniversiteController {
         return universiteServices.retrieveUniversite(idUniversite);
     }
 
+    @PostMapping("/affecterFoyerAUniversite")
+    public Universite affecterFoyerAUniversite (@RequestParam Long idFoyer,@RequestParam String nomUniversite) {
+        return universiteServices.affecterFoyerAUniversite(idFoyer,nomUniversite);
+    }
+    @PostMapping("/desaffecterFoyerAUniversite")
+    public Universite desaffecterFoyerAUniversite(@RequestParam Long idFoyer, @RequestParam Long idUniversite) {
+    return universiteServices.desaffecterFoyerAUniversite(idFoyer,idUniversite);
+    }
 
 
 
@@ -43,4 +51,5 @@ public class UniversiteController {
 
 
 
-}
+
+    }

@@ -1,6 +1,8 @@
 package com.example.projetspring.Services;
 
+import com.example.projetspring.Repositories.IFoyerRepository;
 import com.example.projetspring.Repositories.IUniversiteRepository;
+import com.example.projetspring.entities.Foyer;
 import com.example.projetspring.entities.Universite;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import java.util.List;
 
 public class UniversiteServicesImpl implements IUniversiteServices{
     final IUniversiteRepository universiteRepository;
+    final IFoyerRepository foyerRepository;
     @Override
     public List<Universite> retrieveAllUniversities() {
         return (List<Universite>) universiteRepository.findAll() ;
@@ -31,4 +34,27 @@ public class UniversiteServicesImpl implements IUniversiteServices{
     public Universite retrieveUniversite(Long idUniversite) {
         return universiteRepository.findById(idUniversite).orElse(null);
     }
+
+    @Override
+    public Universite affecterFoyerAUniversite(Long idFoyer, String nomUniversite) {
+        Universite universite =  universiteRepository.findUniversiteByNomUniversite(nomUniversite);
+        Foyer foyer = foyerRepository.findById(idFoyer).orElse(null);
+        universite.setFoyer(foyer);
+        return universiteRepository.save(universite);
+
+    }
+
+    @Override
+    public Universite desaffecterFoyerAUniversite(Long idFoyer, Long idUniversite) {
+        Universite universite = universiteRepository.findById(idUniversite).orElse(null);
+        Foyer foyer =foyerRepository.findById(idFoyer).orElse(null);
+        if (universite.getFoyer()== foyer ){
+            universite.setFoyer(null);
+            return  universiteRepository.save(universite);
+        }else
+        {return null;}
+
+
+    }
+
 }

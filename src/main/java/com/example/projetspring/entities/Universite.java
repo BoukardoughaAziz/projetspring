@@ -13,14 +13,15 @@ public class Universite implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUniversite;
     private String nomUniversite;
-    private Long Adresse;
+    private Long adresse;
     @OneToOne
     private Foyer foyer;
 
-    public Universite(Long idUniversite, String nomUniversite, Long adresse) {
+    public Universite(Long idUniversite, String nomUniversite, Long adresse, Foyer foyer) {
         this.idUniversite = idUniversite;
         this.nomUniversite = nomUniversite;
-        Adresse = adresse;
+        this.adresse = adresse;
+        this.foyer = foyer;
     }
 
     public Universite() {
