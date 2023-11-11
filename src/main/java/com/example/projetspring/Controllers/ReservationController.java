@@ -29,6 +29,11 @@ public class ReservationController {
     public Reservation retrieveReservation(@PathVariable Long idReservation){
         return resevationServices.retrieveReservation(idReservation);
     }
+    @PostMapping("/ajouterReservation")
+    public Reservation ajouterReservation(@RequestParam Long idChambre,@RequestParam Long cinEtudiant){
+       return resevationServices.ajouterReservation(idChambre,cinEtudiant);
+    }
+
 
 
 

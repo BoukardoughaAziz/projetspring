@@ -9,6 +9,7 @@ import com.example.projetspring.entities.Reservation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -35,10 +36,33 @@ public class ReservationServicesImpl implements IResevationServices{
 
     @Override
     public Reservation ajouterReservation(Long idChambre, Long cinEtudiant) {
-//        Chambre chambre = chambreRepository.findById(idChambre).orElse(null);
-//        Etudiant etudiant = etudiantRepository.findEtudiantByCin(cinEtudiant);
-//         Reservation reservation = new Reservation();
-//
-        return null;
+       Chambre chambre = chambreRepository.findById(idChambre).orElse(null);
+       Etudiant etudiant = etudiantRepository.findEtudiantByCin(cinEtudiant);
+       //numreservation
+       Long cinetudiant = etudiant.getCin();
+       Long numchambre = chambre.getNumChambre();
+       String nombloc = chambre.getBloc().getNomBloc();
+       String numreservation = numchambre + " " + nombloc + " " + cinetudiant;
+
+       //debut annee
+        LocalDate thisyear = LocalDate.now();
+        int year = thisyear.getYear();
+        LocalDate debutannee = LocalDate.of(year,9,1);
+
+        //finannee
+        LocalDate finannee = LocalDate.of(year + 1,6,1);
+
+
+        Reservation reservation = new Reservation();
+        if (1 == 1){
+            reservation.setNumReservation(numreservation);
+            reservation.setDebutAnneeUniversitaire(debutannee);
+            reservation.setFinAnneeUniversitaire(finannee);
+            reservation.setEstValide(true);
+            reservationRepsository.save(reservation);
+
+        }
+
+        return reservation;
     }
 }
