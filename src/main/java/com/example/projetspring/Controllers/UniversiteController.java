@@ -1,8 +1,10 @@
 package com.example.projetspring.Controllers;
 
 import com.example.projetspring.Services.IUniversiteServices;
+import com.example.projetspring.entities.Foyer;
 import com.example.projetspring.entities.Universite;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,14 +44,19 @@ public class UniversiteController {
     public Universite desaffecterFoyerAUniversite(@RequestParam Long idFoyer, @RequestParam Long idUniversite) {
     return universiteServices.desaffecterFoyerAUniversite(idFoyer,idUniversite);
     }
-
-
-
-
-
-
-
-
-
-
+    @PostMapping("/ajouterFoyerEtAffecterAUniversite/{idUniversite}")
+    public Foyer ajouterFoyerEtAffecterAUniversite(@RequestBody  Foyer foyer, @PathVariable Long idUniversite){
+        return universiteServices.ajouterFoyerEtAffecterAUniversite(foyer,idUniversite);
     }
+
+
+
+
+
+
+
+
+
+
+
+}

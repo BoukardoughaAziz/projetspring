@@ -17,10 +17,10 @@ public class Foyer implements Serializable {
     private String nomFoyer;
     private Long CapaciteFoyer;
 
-    @OneToOne(mappedBy = "foyer")
+    @OneToOne(mappedBy = "foyer" ,cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private Universite universite;
 
-    @OneToMany(mappedBy = "foyer",cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "foyer",cascade = {CascadeType.PERSIST, CascadeType.REMOVE} ,fetch = FetchType.EAGER)
     private Set<Bloc> bloc;
 
     public Foyer(Long idFoyer, String nomFoyer, Long capaciteFoyer) {

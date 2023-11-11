@@ -1,5 +1,8 @@
 package com.example.projetspring.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,10 +21,12 @@ public class Bloc implements Serializable {
     private String nomBloc;
     private Long capaciteBloc;
 
+    @JsonBackReference
     @ManyToOne
     private Foyer foyer;
-
-    @OneToMany
+    @JsonIgnore
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<Chambre> chambre;
 
 

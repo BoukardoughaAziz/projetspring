@@ -1,5 +1,6 @@
 package com.example.projetspring.Services;
 
+import com.example.projetspring.entities.Bloc;
 import com.example.projetspring.entities.Chambre;
 
 import java.util.List;
@@ -12,4 +13,5 @@ public interface IChambreServices {
     Chambre updateChambre (Chambre c);
 
     Chambre retrieveChambre (Long idChambre);
+    Bloc affecterChambresABloc(List<Long> numChambre, Long idBloc) ;
 }

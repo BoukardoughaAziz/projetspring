@@ -1,11 +1,15 @@
 package com.example.projetspring.Services;
 
+import com.example.projetspring.Repositories.IBlocRepository;
 import com.example.projetspring.Repositories.IFoyerRepository;
 import com.example.projetspring.Repositories.IUniversiteRepository;
+import com.example.projetspring.entities.Bloc;
 import com.example.projetspring.entities.Foyer;
 import com.example.projetspring.entities.Universite;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,6 +19,7 @@ import java.util.List;
 public class UniversiteServicesImpl implements IUniversiteServices{
     final IUniversiteRepository universiteRepository;
     final IFoyerRepository foyerRepository;
+    final IBlocRepository blocRepository;
     @Override
     public List<Universite> retrieveAllUniversities() {
         return (List<Universite>) universiteRepository.findAll() ;
@@ -56,5 +61,23 @@ public class UniversiteServicesImpl implements IUniversiteServices{
 
 
     }
+    @Async
+    @Override
+    public Foyer ajouterFoyerEtAffecterAUniversite(Foyer foyer, Long idUniversite) {
+      foyerRepository.save(foyer);
+        Universite universite = universiteRepository.findById(idUniversite).orElse(null);
+        Long id = universite.getIdUniversite();
+        universite.setFoyer(foyer);
+
+        for (Bloc b : foyer.getBloc()) {
+            b.setFoyer(foyer);
+        }
+
+
+        universiteRepository.save(universite);
+
+        return foyer;
+    }
+
 
 }

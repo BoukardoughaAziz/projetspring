@@ -1,7 +1,10 @@
 package com.example.projetspring.Services;
 
+import com.example.projetspring.Repositories.IBlocRepository;
 import com.example.projetspring.Repositories.IChambreRepository;
+import com.example.projetspring.entities.Bloc;
 import com.example.projetspring.entities.Chambre;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +15,7 @@ import java.util.List;
 
 public class ChambreServicesImpl implements IChambreServices {
     final IChambreRepository chambreRepository;
+    final IBlocRepository blocRepository;
     @Override
     public List<Chambre> retrieveAllChambres() {
         return (List<Chambre>) chambreRepository.findAll();
@@ -31,4 +35,27 @@ public class ChambreServicesImpl implements IChambreServices {
     public Chambre retrieveChambre(Long idChambre) {
         return chambreRepository.findById(idChambre).orElse(null);
     }
-}
+
+
+    @Override
+    public Bloc affecterChambresABloc(List<Long> numChambre, Long idBloc) {
+        Bloc bloc = blocRepository.findById(idBloc).orElse(null);
+        Chambre chambre = null;
+        for (Long id : numChambre) {
+            chambre = chambreRepository.findChambreByNumChambre(id);
+            chambre.setBloc(bloc);
+            chambreRepository.save(chambre);
+        }
+
+
+
+        return bloc;
+    }
+
+
+
+
+
+
+    }
+

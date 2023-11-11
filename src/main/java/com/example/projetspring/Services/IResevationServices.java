@@ -9,4 +9,5 @@ public interface IResevationServices {
 
     Reservation updateReservation (Reservation res);
     Reservation retrieveReservation (Long idReservation);
+    Reservation ajouterReservation (Long idChambre, Long cinEtudiant) ;
 }
