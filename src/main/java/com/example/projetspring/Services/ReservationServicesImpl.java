@@ -6,6 +6,7 @@ import com.example.projetspring.Repositories.IReservationRepsository;
 import com.example.projetspring.entities.Chambre;
 import com.example.projetspring.entities.Etudiant;
 import com.example.projetspring.entities.Reservation;
+import com.example.projetspring.entities.TypeChambre;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -37,39 +38,51 @@ public class ReservationServicesImpl implements IResevationServices{
 
     @Override
     public Reservation ajouterReservation(Long idChambre, Long cinEtudiant) {
-       Chambre chambre = chambreRepository.findById(idChambre).orElse(null);
-       Etudiant etudiant = etudiantRepository.findEtudiantByCin(cinEtudiant);
-       //numreservation
-       Long cinetudiant = etudiant.getCin();
-       Long numchambre = chambre.getNumChambre();
-       String nombloc = chambre.getBloc().getNomBloc();
-       String numreservation = numchambre + " " + nombloc + " " + cinetudiant;
+        Chambre chambre = chambreRepository.findById(idChambre).orElse(null);
+        Etudiant etudiant = etudiantRepository.findEtudiantByCin(cinEtudiant);
 
-       //debut annee
+        //nombre des reservations
+        int nbreservations = etudiant.getReservation().size();
+
+        //type de chambre
+        TypeChambre typechambre = chambre.getTypeChambre();
+
+        //numreservation
+        Long cinetudiant = etudiant.getCin();
+        Long numchambre = chambre.getNumChambre();
+        String nombloc = chambre.getBloc().getNomBloc();
+        String numreservation = numchambre + " " + nombloc + " " + cinetudiant;
+
+        //debut annee
         LocalDate thisyear = LocalDate.now();
         int year = thisyear.getYear();
-        LocalDate debutannee = LocalDate.of(year,9,1);
+        LocalDate debutannee = LocalDate.of(year, 9, 1);
 
         //finannee
-        LocalDate finannee = LocalDate.of(year + 1,6,1);
+        LocalDate finannee = LocalDate.of(year + 1, 6, 1);
 
 
         Reservation reservation = new Reservation();
-        if (1 == 1){
+
+        if ((nbreservations < 3 && typechambre == TypeChambre.TRIPLE) ||
+                (nbreservations < 2 && typechambre == TypeChambre.DOUBLE) ||
+                (nbreservations < 1 && typechambre == TypeChambre.SIMPLE)) {
+
             reservation.setNumReservation(numreservation);
             reservation.setDebutAnneeUniversitaire(debutannee);
             reservation.setFinAnneeUniversitaire(finannee);
             reservation.setEstValide(true);
+
             reservationRepsository.save(reservation);
 
+            etudiant.getReservation().add(reservation);
+            etudiantRepository.save(etudiant);
+
+            return reservation;
+        } else {
+            return null;
         }
 
-        etudiant.getReservation().add(reservation);
-
-        etudiantRepository.save(etudiant);
-
-
-        return reservation;
     }
 
     @Override
@@ -80,10 +93,8 @@ public class ReservationServicesImpl implements IResevationServices{
             r.setEstValide(false);
             reservationRepsository.save(r);
         }
-
-
-
         return reservations ;
 
     }
+
 }

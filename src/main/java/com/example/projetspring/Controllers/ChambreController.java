@@ -35,13 +35,13 @@ public class ChambreController {
         return   chambreServices.retrieveChambre(id);
     }
 
-    @GetMapping("/retrieveChambresjpql")
+   @GetMapping("/retrieveChambresjpql")
     public List<Chambre> getChambresParBlocEtType(@RequestParam Long idBloc,@RequestParam TypeChambre typeC) {
-        return   chambreServices.getChambresParBlocEtType(idBloc,typeC);
-    }
-    @GetMapping("/retrieveChambreskeywords")
-    public List<Chambre> getChambresParBlocEtType(@RequestParam Long idBloc,@RequestParam TypeChambre typeC) {
-        return   chambreServices.getChambresParBlocEtType(idBloc,typeC);
-    }
+       return   chambreServices.getChambresParBlocEtType(idBloc,typeC);
+   }
+//    @GetMapping("/retrieveChambreskeywords")
+//    public List<Chambre> getChambresParBlocEtType(@RequestParam Long idBloc,@RequestParam TypeChambre typeC) {
+//        return   chambreServices.getChambresParBlocEtType(idBloc,typeC);
+//    }
 
 }
