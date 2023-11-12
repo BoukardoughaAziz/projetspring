@@ -4,6 +4,7 @@ import com.example.projetspring.Repositories.IBlocRepository;
 import com.example.projetspring.Repositories.IChambreRepository;
 import com.example.projetspring.entities.Bloc;
 import com.example.projetspring.entities.Chambre;
+import com.example.projetspring.entities.TypeChambre;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -46,10 +47,12 @@ public class ChambreServicesImpl implements IChambreServices {
             chambre.setBloc(bloc);
             chambreRepository.save(chambre);
         }
-
-
-
         return bloc;
+    }
+    @Override
+    public List<Chambre> getChambresParBlocEtType(Long idBloc, TypeChambre typeC){
+        List<Chambre> chambres = chambreRepository.findByTypeChambreAndBlocId(idBloc , typeC);
+            return  chambres;
     }
 
 

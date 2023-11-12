@@ -48,12 +48,8 @@ public class BlocServicesImpl implements IBlocServices {
     public Bloc affecterBlocAFoyer(Long idBloc, Long idFoyer) {
         Bloc bloc = blocRepository.findById(idBloc).orElse(null);
         Foyer foyer = foyerRepository.findById(idFoyer).orElse(null);
-
               bloc.setFoyer(foyer);
               return  blocRepository.save(bloc);
-
-
-
     }
 
 

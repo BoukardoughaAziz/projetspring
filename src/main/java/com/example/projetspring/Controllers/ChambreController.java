@@ -2,6 +2,7 @@ package com.example.projetspring.Controllers;
 
 import com.example.projetspring.Services.IChambreServices;
 import com.example.projetspring.entities.Chambre;
+import com.example.projetspring.entities.TypeChambre;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,5 +35,13 @@ public class ChambreController {
         return   chambreServices.retrieveChambre(id);
     }
 
+    @GetMapping("/retrieveChambresjpql")
+    public List<Chambre> getChambresParBlocEtType(@RequestParam Long idBloc,@RequestParam TypeChambre typeC) {
+        return   chambreServices.getChambresParBlocEtType(idBloc,typeC);
+    }
+    @GetMapping("/retrieveChambreskeywords")
+    public List<Chambre> getChambresParBlocEtType(@RequestParam Long idBloc,@RequestParam TypeChambre typeC) {
+        return   chambreServices.getChambresParBlocEtType(idBloc,typeC);
+    }
 
 }

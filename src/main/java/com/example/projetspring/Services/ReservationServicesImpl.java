@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -63,6 +64,26 @@ public class ReservationServicesImpl implements IResevationServices{
 
         }
 
+        etudiant.getReservation().add(reservation);
+
+        etudiantRepository.save(etudiant);
+
+
         return reservation;
+    }
+
+    @Override
+    public Set<Reservation> annulerReservation(Long cinEtudiant) {
+        Etudiant etudiant = etudiantRepository.findEtudiantByCin(cinEtudiant);
+        Set<Reservation> reservations = etudiant.getReservation();
+        for (Reservation r : reservations){
+            r.setEstValide(false);
+            reservationRepsository.save(r);
+        }
+
+
+
+        return reservations ;
+
     }
 }

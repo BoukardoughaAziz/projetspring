@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/resrvation")
@@ -32,6 +33,11 @@ public class ReservationController {
     @PostMapping("/ajouterReservation")
     public Reservation ajouterReservation(@RequestParam Long idChambre,@RequestParam Long cinEtudiant){
        return resevationServices.ajouterReservation(idChambre,cinEtudiant);
+    }
+
+    @PutMapping("/annulerReservation")
+    public Set<Reservation> annulerReservation(@RequestParam Long cinEtudiant){
+        return resevationServices.annulerReservation(cinEtudiant);
     }
 
 
