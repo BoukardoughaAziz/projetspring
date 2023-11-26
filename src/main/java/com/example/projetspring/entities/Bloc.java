@@ -24,6 +24,7 @@ public class Bloc implements Serializable {
     @JsonBackReference
     @ManyToOne
     private Foyer foyer;
+
     @JsonIgnore
     @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER)

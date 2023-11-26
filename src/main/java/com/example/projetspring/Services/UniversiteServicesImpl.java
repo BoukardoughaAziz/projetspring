@@ -72,8 +72,6 @@ public class UniversiteServicesImpl implements IUniversiteServices{
         for (Bloc b : foyer.getBloc()) {
             b.setFoyer(foyer);
         }
-
-
         universiteRepository.save(universite);
 
         return foyer;
